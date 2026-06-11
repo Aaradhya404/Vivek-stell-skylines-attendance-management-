@@ -22,7 +22,17 @@ const PORT = process.env.PORT || 5000;
 // Security Middlewares
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      process.env.CLIENT_URL
+    ];
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('netlify.app') || origin.endsWith('netlify.com')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
