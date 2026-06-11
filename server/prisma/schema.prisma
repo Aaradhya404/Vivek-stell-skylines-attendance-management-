@@ -1,0 +1,51 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Employee {
+  id          Int          @id @default(autoincrement())
+  srNo        Int
+  pfNumber    String?
+  uan         String?
+  tic         String?
+  name        String
+  designation String       // STAFF | WORKER | DIRECTOR
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  attendance  Attendance[]
+}
+
+model Attendance {
+  id          Int       @id @default(autoincrement())
+  employeeId  Int
+  employee    Employee  @relation(fields: [employeeId], references: [id])
+  date        DateTime  @db.Date
+  checkIn     DateTime? // time of arrival
+  checkOut    DateTime? // time of departure
+  status      String    // PRESENT | HALF_DAY | FULL_LEAVE | ABSENT
+  leaveType   String?   // HALF_DAY | FULL_DAY (only when on leave)
+  notes       String?
+  markedAt    DateTime  @default(now())
+
+  @@unique([employeeId, date])
+}
+
+model Holiday {
+  id        Int      @id @default(autoincrement())
+  name      String
+  date      DateTime @db.Date @unique
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Production build directories
+dist/
+build/
+
+# Local databases
+*.db
+*.db-journal
+
+# Environment variables containing secrets
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
