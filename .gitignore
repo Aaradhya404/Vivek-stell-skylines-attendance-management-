@@ -1,22 +1,33 @@
 # Node modules
 node_modules/
+client/node_modules/
+server/node_modules/
 
-# Production build directories
+# Build outputs
 dist/
+client/dist/
 build/
 
-# Local databases
+# Environment variables (secrets)
+.env
+server/.env
+client/.env
+
+# Local databases (SQLite)
 *.db
 *.db-journal
-
-# Environment variables containing secrets
-.env
-.env.local
+server/prisma/dev.db
 
 # Logs
 logs/
+server/logs/
 *.log
 
-# System files
-.DS_Store
-Thumbs.db
+# Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
